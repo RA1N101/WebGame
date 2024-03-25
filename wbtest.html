@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rocket Quiz Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        canvas {
+            display: block;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #question-container {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 9999; /* Ensure questions are always on top */
+        }
+
+        #question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .answer-button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            border: none;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .answer-button:hover {
+            background-color: #2980b9;
+        }
+
+        #message {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        #rocket {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scale(3, 2); /* Adjust the scale values as needed */
+            transition: transform 0.5s;
+            z-index: 1;
+        }
+
+        #moon {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%) scale(1.7, 1); /* Adjust the scale values as needed */
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div id="question-container">
+        <div id="question"></div>
+        <div id="answers"></div>
+        <div id="message"></div>
+    </div>
+    <img id="rocket" src="rocket.png" width="50" height="100">
+    <img id="moon" src="moon.png" width="180" height="200">
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Resize canvas to fit the window
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Draw starry background
+        function drawBackground() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < 1000; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const radius = Math.random() * 2;
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        // Rocket animation
+        let fuel = 0;
+        function animateRocket() {
+            const rocket = document.getElementById('rocket');
+            rocket.style.transform = `translateX(-50%) translateY(-${fuel * 50}px) scale(3, 2)`;
+        }
+
+        // Game logic
+        let questions = [
+            {
+                question: "What is the capital of France?",
+                answers: ["Paris", "London", "Berlin", "Madrid"],
+                correctAnswer: "Paris"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                answers: ["Earth", "Mars", "Venus", "Jupiter"],
+                correctAnswer: "Mars"
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function shuffleQuestions() {
+            for (let i = questions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questions[i], questions[j]] = [questions[j], questions[i]];
+            }
+        }
+
+        function shuffleAnswers() {
+            for (let i = 0; i < questions.length; i++) {
+                questions[i].answers.sort(() => Math.random() - 0.5);
+            }
+        }
+
+        function displayQuestion() {
+            const questionElement = document.getElementById("question");
+            const answersElement = document.getElementById("answers");
+
+            questionElement.textContent = questions[currentQuestion].question;
+            answersElement.innerHTML = "";
+
+            // Shuffle answers
+            const shuffledAnswers = [...questions[currentQuestion].answers];
+            shuffledAnswers.sort(() => Math.random() - 0.5);
+
+            shuffledAnswers.forEach(answer => {
+                const button = document.createElement("button");
+                button.textContent = answer;
+                button.classList.add("answer-button");
+                button.addEventListener("click", () => {
+                    checkAnswer(answer);
+                });
+                answersElement.appendChild(button);
+            });
+
+            document.getElementById('question-container').style.display = 'block';
+        }
+
+        function checkAnswer(answer) {
+            if (answer === questions[currentQuestion].correctAnswer) {
+                document.getElementById("message").textContent = "Correct!";
+                fuel++;
+                if (fuel < 15) {
+                    setTimeout(() => {
+                        currentQuestion++;
+                        if (currentQuestion < questions.length) {
+                            displayQuestion();
+                        } else {
+                            currentQuestion = 0;
+                            shuffleQuestions();
+                            shuffleAnswers();
+                            displayQuestion();
+                        }
+                        document.getElementById("message").textContent = "";
+                    }, 2000); // Wait for 2 seconds before showing next question
+                } else {
+                    setTimeout(() => {
+                        document.getElementById("message").textContent = "Congratulations! You've reached the moon!";
+                    }, 2000); // Wait for 2 seconds before showing final message
+                }
+            } else {
+                document.getElementById("message").textContent = "Wrong!";
+            }
+
+            updateFuel();
+        }
+
+        function updateFuel() {
+            animateRocket();
+            document.getElementById("rocket").style.transition = "transform 2s linear";
+        }
+
+        // Start the game
+        drawBackground();
+        shuffleQuestions();
+        shuffleAnswers();
+        displayQuestion();
+    </script>
+</body>
+</html>
