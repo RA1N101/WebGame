@@ -115,15 +115,56 @@
         // Game logic
         let questions = [
             {
-                question: "What is the capital of France?",
-                answers: ["Paris", "London", "Berlin", "Madrid"],
-                correctAnswer: "Paris"
+                question: "What is Snoop Dogg's real name?",
+                answers: ["Calvin Cordozar Broadus Jr", "John Williams", "James donovan", "Chris Williams"],
+                correctAnswer: "Calvin Cordozar Broadus Jr"
             },
             {
-                question: "Which planet is known as the Red Planet?",
-                answers: ["Earth", "Mars", "Venus", "Jupiter"],
-                correctAnswer: "Mars"
+                question: "When was Drake born?",
+                answers: ["1859", "1492", "1982", "1986"],
+                correctAnswer: "1986"
+            },
+            {
+                question: "What was Elvis Presley's last song?",
+                answers: ["Blue Moon Of Kentucky", "I love you because", "I'll never stand in your way", "Mystery Train"],
+                correctAnswer: "Blue Moon Of Kentucky"
+            },
+            {
+                question: "What was Beethoven's most famous song?",
+                answers: ["Symphony No. 5", "Symphony No. 4", "Symphony No. 3", "Symphony No. 1"],
+                correctAnswer: "Symphony No. 5"
+            },
+            {
+                question: "When did Wilhelm Richard Wagner die?",
+                answers: ["1883", "1955", "1885", "1892"],
+                correctAnswer: "1883"
+            },
+            {
+                question: "Which of these songs were made by Wilhelm Richard Wagner?",
+                answers: ["The ride of the Valkyries", "Blue Moon of Kentucky", "I love you because", "4 Seasons"],
+                correctAnswer: "The ride of the Valkyries"
+            },
+            {
+                question: "When was Wilhelm Richard Wagner born?",
+                answers: ["1813", "1841", "1495", "1941"],
+                correctAnswer: "1813"
+            },
+            {
+                question: "When did Beethoven die?",
+                answers: ["1827", "1841", "1582", "1946"],
+                correctAnswer: "1827"
+            },            
+           {
+                question: "When was Beethoven born?",
+                answers: ["1770", "1700", "1984", "1949"],
+                correctAnswer: "1770"
+            },
+            {
+                question: "When was Wolfgang Amadeus Mozart born?",
+                answers: ["1756", "1745", "1844", "1955"],
+                correctAnswer: "1756"
             }
+
         ];
 
         let currentQuestion = 0;
@@ -184,7 +225,7 @@
                     }, 2000); // Wait for 2 seconds before showing next question
                 } else {
                     setTimeout(() => {
-                        document.getElementById("message").textContent = "Congratulations! You've reached the moon!";
+                        document.getElementById("message").textContent = "Congratulations! You've reached the moon! Sources: https://www.wikipedia.org/";
                     }, 2000); // Wait for 2 seconds before showing final message
                 }
             } else {
