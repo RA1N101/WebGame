@@ -106,11 +106,13 @@
         }
 
         // Rocket animation
-        let fuel = 11;
+        let questionsAnswered = 0;
         function animateRocket() {
             const rocket = document.getElementById('rocket');
-            rocket.style.transform = `translateX(-50%) translateY(-${fuel * 50}px) scale(3, 2)`;
+            const translateY = 20 * questionsAnswered; // Adjust the multiplier (20) as needed
+            rocket.style.transform = `translateX(-50%) translateY(-${translateY}px) scale(3, 2)`;
         }
+        
 
         // Game logic
         let questions = [
@@ -163,8 +165,57 @@
                 question: "When was Wolfgang Amadeus Mozart born?",
                 answers: ["1756", "1745", "1844", "1955"],
                 correctAnswer: "1756"
+            },
+            {
+            question: "What is the real name of the artist known as The Weeknd?",
+            answers: ["Abel Tesfaye", "Michael Jackson", "Justin Bieber", "Christopher Brown"],
+            correctAnswer: "Abel Tesfaye"
+           },
+           {
+            question: "Who produced the hit song 'Uptown Funk' by Mark Ronson featuring Bruno Mars?",
+            answers: ["Mark Ronson", "Pharrell Williams", "Dr. Dre", "Calvin Harris"],
+            correctAnswer: "Mark Ronson"
+            },
+            {
+            question: "Which band released the album 'Dark Side of the Moon'?",
+            answers: ["Pink Floyd", "Led Zeppelin", "The Beatles", "The Rolling Stones"],
+            correctAnswer: "Pink Floyd"
+            },
+            {
+            question: "What year did Michael Jackson release the album 'Thriller'?",
+            answers: ["1982", "1979", "1987", "1984"],
+            correctAnswer: "1982"
+            },
+            {
+            question: "Who composed the opera 'The Marriage of Figaro'?",
+            answers: ["Wolfgang Amadeus Mozart", "Ludwig van Beethoven", "Johann Sebastian Bach", "Franz Schubert"],
+            correctAnswer: "Wolfgang Amadeus Mozart"
+            },
+            {
+            question: "What is the name of the lead singer of the band Queen?",
+            answers: ["Freddie Mercury", "David Bowie", "Elton John", "Mick Jagger"],
+            correctAnswer: "Freddie Mercury"
+            },
+            {
+            question: "Which artist released the album 'Back to Black' in 2006?",
+            answers: ["Amy Winehouse", "Adele", "Beyoncé", "Rihanna"],
+            correctAnswer: "Amy Winehouse"
+            },
+            {
+            question: "What year did The Beatles release their album 'Sgt. Pepper's Lonely Hearts Club Band'?",
+            answers: ["1967", "1970", "1964", "1969"],
+            correctAnswer: "1967"
+            },
+            {
+            question: "Who is known as the 'King of Pop'?",
+            answers: ["Michael Jackson", "Prince", "Elvis Presley", "Justin Timberlake"],
+            correctAnswer: "Michael Jackson"
+            },
+            {
+            question: "Which artist released the album 'Lemonade' in 2016?",
+            answers: ["Beyoncé", "Rihanna", "Alicia Keys", "Taylor Swift"],
+            correctAnswer: "Beyoncé"
             }
-
         ];
 
         let currentQuestion = 0;
@@ -209,8 +260,8 @@
         function checkAnswer(answer) {
             if (answer === questions[currentQuestion].correctAnswer) {
                 document.getElementById("message").textContent = "Correct!";
-                fuel++;
-                if (fuel < 15) {
+                questionsAnswered++;
+                if (questionsAnswered < 20) {
                     setTimeout(() => {
                         currentQuestion++;
                         if (currentQuestion < questions.length) {
@@ -225,17 +276,17 @@
                     }, 2000); // Wait for 2 seconds before showing next question
                 } else {
                     setTimeout(() => {
-                        document.getElementById("message").textContent = "Congratulations! You've reached the moon! Sources: https://www.wikipedia.org/";
+                        document.getElementById("message").textContent = "Congratulations! You've reached the moon!";
                     }, 2000); // Wait for 2 seconds before showing final message
                 }
             } else {
                 document.getElementById("message").textContent = "Wrong!";
             }
 
-            updateFuel();
+            updateRocket();
         }
 
-        function updateFuel() {
+        function updateRocket() {
             animateRocket();
             document.getElementById("rocket").style.transition = "transform 2s linear";
         }
@@ -248,3 +299,10 @@
     </script>
 </body>
 </html>
+
+
+function animateRocket() {
+    const rocket = document.getElementById('rocket');
+    const translateY = 20 * questionsAnswered; // Adjust the multiplier (20) as needed
+    rocket.style.transform = `translateX(-50%) translateY(-${translateY}px) scale(3, 2)`;
+}
